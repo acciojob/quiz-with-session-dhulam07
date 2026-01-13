@@ -1,4 +1,55 @@
 //your JS code here.
+// Complete JS code - place this BEFORE the "Do not change" line
+
+const questionsElement = document.getElementById('questions');
+const submitButton = document.getElementById('submit');
+const scoreElement = document.getElementById('score');
+
+let userAnswers = [];
+
+// Load progress from sessionStorage
+const savedProgress = sessionStorage.getItem('progress');
+if (savedProgress) {
+  try {
+    userAnswers = JSON.parse(savedProgress);
+  } catch (e) {
+    userAnswers = [];
+  }
+}
+
+// Add event listener for radio button changes
+questionsElement.addEventListener('change', (e) => {
+  if (e.target.type === 'radio') {
+    const name = e.target.name;
+    const qIndex = parseInt(name.split('-')[1]);
+    userAnswers[qIndex] = e.target.value;
+    sessionStorage.setItem('progress', JSON.stringify(userAnswers));
+  }
+});
+
+// Submit button handler
+submitButton.addEventListener('click', () => {
+  let score = 0;
+  for (let i = 0; i < questions.length; i++) {
+    if (userAnswers[i] === questions[i].answer) {
+      score++;
+    }
+  }
+  scoreElement.textContent = `Your score is ${score} out of 5.`;
+  localStorage.setItem('score', score.toString());
+});
+
+// Show saved score on load if exists
+const savedScore = localStorage.getItem('score');
+if (savedScore && !scoreElement.textContent) {
+  scoreElement.textContent = `Your last score was ${savedScore} out of 5.`;
+}
+
+// Now the original code will run and use our userAnswers array
+// Do not change code below this line
+// This code will just display the questions to the screen
+
+
 
 // Do not change code below this line
 // This code will just display the questions to the screen
